@@ -40,9 +40,22 @@ chrome.experimental.speechInput.onError.addListener(function(error) {
 
 chrome.experimental.speechInput.onResult.addListener(function(result) {
   var words = result.hypotheses[0].utterance;
-  var liPrefix = "http://www.linkedin.com/pub/dir/?first=";
-  var liSuffix = "&last=&search=Search";
-  var url = liPrefix.concat(words,liSuffix);
-  window.open(url);
-  chrome.experimental.speechInput.start({},startCallBack());
+  if (words.toUpperCase() == "CHINESE")
+  {
+    alert("Change language to Chinese");
+    chrome.experimental.speechInput.start({"language": "cmn-Hans-CN" },startCallBack());
+  }
+  else if (words.toUpperCase() == "ENGLISH")
+  {
+    alert("Change language to English");
+    chrome.experimental.speechInput.start({"language": "en-US" },startCallBack());
+  }
+  else 
+  {
+    var liPrefix = "http://www.linkedin.com/pub/dir/?first=";
+    var liSuffix = "&last=&search=Search";
+    var url = liPrefix.concat(words,liSuffix);
+    window.open(url);
+    chrome.experimental.speechInput.start({},startCallBack());
+  }
 });
